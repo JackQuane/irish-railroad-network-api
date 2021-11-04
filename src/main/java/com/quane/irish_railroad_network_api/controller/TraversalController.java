@@ -19,28 +19,27 @@ public class TraversalController {
 
     private final TraversalService traversalService;
 
-    @GetMapping("/bfs/{startNode}")
-    public ResponseEntity<List<String>> getPathBFS(@PathVariable("startNode") int startNode) {
+    @GetMapping("/bfs/{startNode}/")
+    public ResponseEntity<List<String>> getTraversalPathBFS(@PathVariable("startNode") int startNode) {
 
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .body(traversalService.getPathBFS(startNode));
+                .body(traversalService.getTraversalPathBFS(startNode));
     }
-//
-//    @GetMapping("/dfs/{startNode, endNode}")
-//    public ResponseEntity<List<String>> getPathDFS(@PathVariable("startNode") String startNode, @PathVariable("endNode") String endNode) {
-//
-//        return ResponseEntity
-//                .status(HttpStatus.OK)
-//                .body(traversalService.getPathDFS(startNode, endNode));
-//    }
 
-    @GetMapping("/test/")
-    public ResponseEntity<RailwayNetwork> testCont() {
+    @GetMapping("/dfs/{startNode}/")
+    public ResponseEntity<List<String>> getTraversalPathDFS(@PathVariable("startNode") int startNode) {
 
         return ResponseEntity
-                  .status(HttpStatus.OK)
-                  .body(traversalService.network());
+                .status(HttpStatus.OK)
+                .body(traversalService.getTraversalPathDFS(startNode));
+    }
 
+    @GetMapping("/shortestpath/bfs/{startNode}/{endNode}/")
+    public ResponseEntity<List<String>> getShortestPathBFS(@PathVariable("startNode") int startNode, @PathVariable("endNode") int endNode) {
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(traversalService.getShortestPathBFS(startNode, endNode));
     }
 }
