@@ -1,5 +1,5 @@
 # irish-railroad-network-api
-API for traversing through nodes/stations in the Irish railroad network using different graph traversal algorithms. 
+API for traversing through nodes/stations in the Irish railroad network using different graph traversal/shortest path algorithms. 
 
 Java Spring Boot, MySQL Database.
 
