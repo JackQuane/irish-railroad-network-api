@@ -16,7 +16,7 @@ public class TraversalService {
         HashMap<Integer, String> stations = railwayNetwork.getStations();
         List<List<Boolean>> adjacencyMatrix = railwayNetwork.getAdjacencyMatrix();
 
-        System.out.println(adjacencyMatrix.get(0));
+//        System.out.println(adjacencyMatrix.get(0));
 
         int matrixDimension = adjacencyMatrix.size();
         List<String> output = new ArrayList<>();

@@ -2,6 +2,7 @@ package com.quane.irish_railroad_network_api.controller;
 
 import com.quane.irish_railroad_network_api.model.RailwayNetwork;
 import com.quane.irish_railroad_network_api.service.TraversalService;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ public class TraversalController {
     private final TraversalService traversalService;
 
     @GetMapping("/bfs/{startNode}/")
+    @ApiOperation("view a BFS traversal path of the Irish rail network starting from a specific station/node")
     public ResponseEntity<List<String>> getTraversalPathBFS(@PathVariable("startNode") int startNode) {
 
         return ResponseEntity
@@ -28,6 +30,7 @@ public class TraversalController {
     }
 
     @GetMapping("/dfs/{startNode}/")
+    @ApiOperation("view a BFS traversal path of the Irish rail network starting from a specific station/node")
     public ResponseEntity<List<String>> getTraversalPathDFS(@PathVariable("startNode") int startNode) {
 
         return ResponseEntity
@@ -36,6 +39,7 @@ public class TraversalController {
     }
 
     @GetMapping("/shortestpath/bfs/{startNode}/{endNode}/")
+    @ApiOperation("view the BFS shortest path of the Irish rail network from a startNode to an endNode")
     public ResponseEntity<List<String>> getShortestPathBFS(@PathVariable("startNode") int startNode, @PathVariable("endNode") int endNode) {
 
         return ResponseEntity
