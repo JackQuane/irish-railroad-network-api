@@ -24,12 +24,12 @@ public class RailwayNetworkConfig {
         HashMap<Integer, String> tempStations = new HashMap<>();
         RailwayNetwork railwayNetwork = new RailwayNetwork();
 
-        String sql = "SELECT * FROM railway_network.`irishrailnetwork-stations`";
+        String sql = "SELECT * FROM irishrailroadnetwork.`irishrailnetwork-stations`";
         jdbcTemplate.query(sql, (rs, rowNum) -> tempStations.put(rs.getInt(1), rs.getString(2)));
         railwayNetwork.setStations(tempStations);
 
 
-        sql = "SELECT * FROM railway_network.`irishrailnetwork-adjacencymatrix`";
+        sql = "SELECT * FROM irishrailroadnetwork.`irishrailnetwork-adjacencymatrix`";
         tempMatrix = jdbcTemplate.query(
                     sql,
                     (rs, rowNum) ->
