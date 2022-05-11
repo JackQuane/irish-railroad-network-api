@@ -1,51 +1,81 @@
 package com.quane.irish_railroad_network_api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.quane.irish_railroad_network_api.dto.LoginRequest;
 import com.quane.irish_railroad_network_api.dto.RegisterRequest;
+import com.quane.irish_railroad_network_api.security.JwtAuthenticationFilter;
 import com.quane.irish_railroad_network_api.service.AuthService;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.doNothing;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(MockitoExtension.class)
+//@ContextConfiguration(classes = AuthController.class)
+@WebMvcTest(AuthController.class)
+//@WebMvcTest(controllers =
+//        AuthController.class,
+//        excludeAutoConfiguration = {
+//                SecurityConfig.class
+//        })
+@AutoConfigureMockMvc(addFilters = false)
 public class AuthControllerTest {
+
+    @Autowired
+    private MockMvc mvc;
+
+    @MockBean
+    private UserDetailsService userDetailsService;
+
+    @MockBean
+    private JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @InjectMocks
     private AuthController authController;
 
-    @Mock
+    @MockBean
     private AuthService authService;
 
     @Test
-    public void signUp_ValidRegistrationRequest_Successful() {
-        RegisterRequest registerRequest = new RegisterRequest("tom", "password");
-        doNothing().when(authService).signup(registerRequest);
-        ResponseEntity<String> returnValue = authController.signup(registerRequest);
-        verify(authService,times(1)).signup(registerRequest);
-        assertEquals(returnValue, new ResponseEntity<>("User Registration Successful", HttpStatus.OK));
+    public void signUp_ValidRegistrationRequest_Successful() throws Exception {
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/auth/signup/")
+                        .content(asJsonString(new RegisterRequest("tom", "password")))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void login_ValidLoginCredentials_Successful() {
+    public void login_ValidLoginCredentials_Successful() throws Exception {
         LoginRequest loginRequest = new LoginRequest("tom", "password");
         when(authService.login(loginRequest)).thenReturn("exampleToken");
-        String returnValue = authController.login(loginRequest);
-        assertEquals(returnValue, "exampleToken");
+
+        mvc.perform(MockMvcRequestBuilders
+                        .post("/api/auth/login/")
+                        .content(asJsonString(new LoginRequest("tom", "password")))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().contentType("text/plain;charset=UTF-8"))
+                .andExpect(content().string("exampleToken"))
+                .andExpect(status().isOk());
+    }
+
+    public static String asJsonString(final Object obj) {
+        try {
+            return new ObjectMapper().writeValueAsString(obj);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -3,6 +3,7 @@ package com.quane.irish_railroad_network_api.config;
 import com.quane.irish_railroad_network_api.security.JwtAuthenticationFilter;
 import com.quane.irish_railroad_network_api.service.UserDetailsServiceImpl;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
