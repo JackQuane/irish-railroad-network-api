@@ -68,7 +68,7 @@ class TraversalControllerTest {
     }
 
     @Test
-    void getTraversalPathDFS() throws Exception {
+    void getTraversalPathDFSTest() throws Exception {
 
         int startNode = 0;
         List<String> testList = Arrays.asList("Galway", "Ballinasloe", "Athenry");
@@ -84,7 +84,7 @@ class TraversalControllerTest {
     }
 
     @Test
-    void getShortestPathBFS() throws Exception {
+    void getShortestPathBFSTest() throws Exception {
 
         int startNode = 0;
         int endNode = 3;
