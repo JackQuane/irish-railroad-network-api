@@ -36,4 +36,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private Collection<? extends GrantedAuthority> getAuthorities(String role) {
         return singletonList(new SimpleGrantedAuthority(role));
     }
+
+    public void deleteUser(String username) {
+        userRepository.deleteById(userRepository.findByUsername(username).get().getUserId());
+    }
 }

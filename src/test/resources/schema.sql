@@ -1,0 +1,10 @@
+--CREATE TABLE User (
+--   user_id bigint NOT NULL AUTO_INCREMENT PRIMARY KEY,
+--   password VARCHAR(255),
+--   username VARCHAR(255)
+--);
+--
+--CREATE TABLE irishrailnetwork-stations (
+--  id INT(11),
+--  stations TEXT
+--);

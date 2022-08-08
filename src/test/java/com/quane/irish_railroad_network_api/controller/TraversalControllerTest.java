@@ -29,11 +29,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(MockitoExtension.class)
 @WebMvcTest(TraversalController.class)
-// @WebMvcTest(controllers =
-//         TraversalController.class,
-//        excludeAutoConfiguration = {
-//                SecurityConfig.class
-//        })
 @AutoConfigureMockMvc(addFilters = false)
 class TraversalControllerTest {
 
